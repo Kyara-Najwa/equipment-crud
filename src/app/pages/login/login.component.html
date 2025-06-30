@@ -1,0 +1,43 @@
+<div class="login-page">
+  <div class="login-box">
+    <div class="logo">3PM Solution</div>
+    <h2 class="welcome">Welcome Back!</h2>
+    <p class="subtitle">We missed you! Please enter your details.</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <label>Email</label>
+      <input formControlName="emailAddress" placeholder="Enter your email" type="email" />
+      <small *ngIf="loginForm.get('emailAddress')?.touched && loginForm.get('emailAddress')?.errors?.['required']" style="color:red;">
+        Email wajib diisi.
+      </small>
+      <small *ngIf="loginForm.get('emailAddress')?.touched && loginForm.get('emailAddress')?.errors?.['email']" style="color:red;">
+        Format email tidak valid.
+      </small>
+
+      <label>Password</label>
+      <div class="password-wrapper">
+        <input formControlName="password" placeholder="Enter your password" type="password" />
+      </div>
+      <small *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']" style="color:red;">
+        Password wajib diisi.
+      </small>
+      <small *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['minlength']" style="color:red;">
+        Password minimal 4 karakter.
+      </small>
+
+      <div class="options">
+        <label><input type="checkbox" /> Remember me</label>
+        <a href="#" class="link">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="loginForm.invalid">Sign in</button>
+    </form>
+
+    <p class="signup-text">
+      Don't have an account?
+      <a routerLink="/register" class="link">Sign up</a>
+    </p>
+
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  </div>
+</div>

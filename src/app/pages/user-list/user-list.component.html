@@ -1,0 +1,55 @@
+<div class="user-list-page">
+  <div class="user-wrapper">
+    <h2 class="title">Daftar Seluruh User</h2>
+
+    <div class="table-wrapper">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Nama Lengkap</th>
+            <th>Perusahaan</th>
+            <th>No. Telepon</th>
+            <th>Role</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <ng-container *ngIf="editUserId === user.id; else viewRow">
+              <td>{{ user.id }}</td>
+              <td><input [(ngModel)]="editedUser.emailAddress" /></td>
+              <td><input [(ngModel)]="editedUser.fullName" /></td>
+              <td><input [(ngModel)]="editedUser.companyName" /></td>
+              <td><input [(ngModel)]="editedUser.telp" /></td>
+              <td>
+                <select [(ngModel)]="editedUser.roleId">
+                  <option [value]="1">Admin</option>
+                  <option [value]="2">User</option>
+                </select>
+              </td>
+              <td class="action-buttons">
+                <button (click)="saveEdit()">Simpan</button>
+                <button (click)="cancelEdit()">Batal</button>
+              </td>
+            </ng-container>
+
+            <ng-template #viewRow>
+              <td>{{ user.id }}</td>
+              <td>{{ user.emailAddress }}</td>
+              <td>{{ user.fullName }}</td>
+              <td>{{ user.companyName }}</td>
+              <td>{{ user.telp }}</td>
+              <td>{{ user.roleName }}</td>
+              <td class="action-buttons">
+                <button (click)="startEdit(user)">Edit</button>
+                <button (click)="deleteUser(user.id)">Hapus</button>
+              </td>
+            </ng-template>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

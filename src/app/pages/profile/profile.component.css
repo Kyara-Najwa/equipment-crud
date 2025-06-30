@@ -1,0 +1,185 @@
+.profile-page {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding: 40px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f7fb;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* SIDEBAR */
+.profile-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 32px 24px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border: 4px solid #eaeaea;
+}
+
+.profile-card h2 {
+  font-size: 30px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 10px 0 6px;
+  text-align: center;
+}
+
+.profile-card p {
+  font-size: 20px;
+  color: #555;
+  text-align: center;
+  margin: 2px 0 6px;
+  line-height: 1.4;
+}
+
+.profile-extra {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.profile-extra p {
+  font-size: 18px;
+  margin: 8px 0;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+.profile-extra strong {
+  font-weight: 600;
+  color: #1f1f1f;
+}
+
+/* FORM SECTION */
+.profile-main {
+  flex: 1;
+  min-width: 600px;
+}
+
+.profile-card-form {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.profile-form-header {
+  background-color: #4e60ff;
+  color: white;
+  padding: 24px 32px;
+}
+
+.profile-form-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.profile-form-body {
+  padding: 32px;
+}
+
+.form-row {
+  display: flex;
+  gap: 32px;
+  width: 100%;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #2c3e50;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background-color: #f9f9ff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Validasi Visual */
+.form-group input.invalid {
+  border-color: #e74c3c;
+  background-color: #fff6f6;
+}
+
+.error-msg {
+  color: #e74c3c;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+/* Tombol Submit */
+.form-button-wrapper {
+  margin-top: 24px;
+  text-align: right;
+  width: 100%;
+}
+
+.update-button {
+  padding: 10px 20px;
+  background-color: #4e60ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.update-button:hover {
+  background-color: #3c4bdc;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .profile-page {
+    flex-direction: column;
+  }
+
+  .profile-main {
+    min-width: 100%;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-button-wrapper {
+    text-align: center;
+  }
+
+  .profile-card-form {
+    max-width: 100%;
+  }
+}

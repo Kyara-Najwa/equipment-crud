@@ -1,0 +1,59 @@
+<div class="add-equipment-page">
+  <div class="add-equipment-wrapper">
+    <h2 class="title">Tambah Equipment</h2>
+
+    <form (ngSubmit)="addEquipment()" #form="ngForm" class="form">
+      <!-- Input Equipment -->
+      <input
+        type="number"
+        name="equipment"
+        [(ngModel)]="newEquipment.equipment"
+        placeholder="Equipment"
+        #equipmentInput="ngModel"
+        required
+        min="1"
+      />
+      <small *ngIf="equipmentInput.invalid && equipmentInput.touched">
+        Nilai equipment wajib diisi dan minimal 1.
+      </small>
+
+      <!-- Input Model Name -->
+      <input
+        name="modelName"
+        [(ngModel)]="newEquipment.modelName"
+        placeholder="Model Name"
+        required
+        #modelNameInput="ngModel"
+      />
+      <small *ngIf="modelNameInput.invalid && modelNameInput.touched">
+        Model name tidak boleh kosong.
+      </small>
+
+      <!-- Input Description -->
+      <input
+        name="description"
+        [(ngModel)]="newEquipment.description"
+        placeholder="Description"
+        required
+        #descriptionInput="ngModel"
+      />
+      <small *ngIf="descriptionInput.invalid && descriptionInput.touched">
+        Deskripsi tidak boleh kosong.
+      </small>
+
+      <!-- Input Location -->
+      <input
+        name="location"
+        [(ngModel)]="newEquipment.location"
+        placeholder="Location"
+        required
+        #locationInput="ngModel"
+      />
+      <small *ngIf="locationInput.invalid && locationInput.touched">
+        Lokasi tidak boleh kosong.
+      </small>
+
+      <button type="submit" [disabled]="form.invalid">Tambah</button>
+    </form>
+  </div>
+</div>

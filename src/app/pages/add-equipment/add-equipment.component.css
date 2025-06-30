@@ -1,0 +1,85 @@
+/* Halaman Tambah Equipment */
+.add-equipment-page {
+  background-color: #f0efff; /* Sama seperti halaman utama */
+  padding: 32px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.add-equipment-wrapper {
+  max-width: 600px;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 28px 32px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  color: #3f3d56;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.form input {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  background-color: #fdfdff;
+}
+
+.form input:focus {
+  border-color: #4e60ff;
+  outline: none;
+}
+
+.form small {
+  color: red;
+  font-size: 13px;
+}
+
+button {
+  padding: 10px 14px;
+  font-size: 15px;
+  font-weight: 600;
+  background-color: #4e60ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #3a4bd6;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+  .add-equipment-wrapper {
+    padding: 16px;
+  }
+
+  .form input {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}

@@ -1,0 +1,148 @@
+/* Halaman Login */
+.login-page {
+  height: 100vh;
+  background-color: #f0efff; /* Konsisten dengan halaman lain */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Card login */
+.login-box {
+  background-color: #ffffff;
+  padding: 32px 28px;
+  border-radius: 16px;
+  width: 360px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+/* Logo */
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #3f3d56;
+}
+
+/* Judul dan subjudul */
+.welcome {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #3f3d56;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #666666;
+  margin-bottom: 20px;
+}
+
+/* Form login */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.login-form label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: #3f3d56;
+}
+
+.login-form input {
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fdfdff;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.login-form input:focus {
+  border-color: #4e60ff;
+}
+
+/* Password field */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 93%;
+}
+
+/* Opsi checkbox dan link */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #3f3d56;
+}
+
+.link {
+  color: #4e60ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Tombol utama */
+.btn-primary {
+  background-color: #4e60ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #3a4bd6;
+}
+
+/* Google login (opsional) */
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #ccc;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-google img {
+  width: 18px;
+  height: 18px;
+}
+
+/* Sign up link */
+.signup-text {
+  margin-top: 18px;
+  font-size: 13px;
+  color: #3f3d56;
+}
+
+.error-message {
+  color: #b00020;
+  font-size: 13px;
+  margin-top: 10px;
+}

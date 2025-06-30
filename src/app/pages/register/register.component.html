@@ -1,0 +1,94 @@
+<div class="login-page">
+  <div class="login-box">
+    <div class="logo">3PM Solution</div>
+    <div class="welcome">Register</div>
+    <div class="subtitle">Create your account below</div>
+
+    <form (ngSubmit)="registerUser()" #form="ngForm" class="login-form">
+      <!-- Email -->
+      <label>Email</label>
+      <input
+        type="email"
+        name="emailAddress"
+        [(ngModel)]="user.emailAddress"
+        placeholder="Enter your email"
+        required
+        email
+        #email="ngModel"
+      />
+      <small *ngIf="email.invalid && email.touched" class="error-message">
+        Email wajib diisi dan harus valid.
+      </small>
+
+      <!-- Password -->
+      <label>Password</label>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="user.password"
+        placeholder="Enter your password"
+        required
+        minlength="3"
+        #password="ngModel"
+      />
+      <small *ngIf="password.invalid && password.touched" class="error-message">
+        Password minimal 3 karakter.
+      </small>
+
+      <!-- Full Name -->
+      <label>Nama Lengkap</label>
+      <input
+        type="text"
+        name="fullName"
+        [(ngModel)]="user.fullName"
+        placeholder="Full Name"
+        required
+        #fullName="ngModel"
+      />
+      <small *ngIf="fullName.invalid && fullName.touched" class="error-message">
+        Nama lengkap wajib diisi.
+      </small>
+
+      <!-- Company -->
+      <label>Perusahaan</label>
+      <input
+        type="text"
+        name="companyName"
+        [(ngModel)]="user.companyName"
+        placeholder="Company Name"
+        required
+        #companyName="ngModel"
+      />
+      <small *ngIf="companyName.invalid && companyName.touched" class="error-message">
+        Nama perusahaan wajib diisi.
+      </small>
+
+      <!-- Phone -->
+      <label>No. Telepon</label>
+      <input
+        type="tel"
+        name="telp"
+        [(ngModel)]="user.telp"
+        placeholder="Nomor Telepon"
+        required
+        pattern="^[0-9]{8,15}$"
+        #telp="ngModel"
+      />
+      <small *ngIf="telp.invalid && telp.touched" class="error-message">
+        Nomor telepon harus 8–15 digit angka.
+      </small>
+
+      <!-- Hidden role -->
+      <input type="hidden" name="roleId" [(ngModel)]="user.roleId" />
+
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">
+        Register
+      </button>
+    </form>
+
+    <p class="signup-text">
+      Already have an account?
+      <a routerLink="/login" class="link">Sign in</a>
+    </p>
+  </div>
+</div>
