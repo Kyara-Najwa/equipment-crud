@@ -1,14 +1,12 @@
-/* Halaman Login */
 .login-page {
   height: 100vh;
-  background-color: #f0efff; /* Konsisten dengan halaman lain */
+  background-color: #f0efff;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* Card login */
 .login-box {
   background-color: #ffffff;
   padding: 32px 28px;
@@ -18,7 +16,6 @@
   text-align: center;
 }
 
-/* Logo */
 .logo {
   font-weight: bold;
   font-size: 20px;
@@ -26,7 +23,6 @@
   color: #3f3d56;
 }
 
-/* Judul dan subjudul */
 .welcome {
   font-size: 22px;
   font-weight: 700;
@@ -40,7 +36,6 @@
   margin-bottom: 20px;
 }
 
-/* Form login */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -69,7 +64,6 @@
   border-color: #4e60ff;
 }
 
-/* Password field */
 .password-wrapper {
   position: relative;
   width: 100%;
@@ -79,7 +73,6 @@
   width: 93%;
 }
 
-/* Opsi checkbox dan link */
 .options {
   display: flex;
   justify-content: space-between;
@@ -92,13 +85,13 @@
   color: #4e60ff;
   text-decoration: none;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .link:hover {
   text-decoration: underline;
 }
 
-/* Tombol utama */
 .btn-primary {
   background-color: #4e60ff;
   color: white;
@@ -115,26 +108,6 @@
   background-color: #3a4bd6;
 }
 
-/* Google login (opsional) */
-.btn-google {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  border: 1px solid #ccc;
-  background: white;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.btn-google img {
-  width: 18px;
-  height: 18px;
-}
-
-/* Sign up link */
 .signup-text {
   margin-top: 18px;
   font-size: 13px;

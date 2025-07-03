@@ -13,32 +13,28 @@ import { Router } from '@angular/router';
 })
 export class AddEquipmentComponent {
   newEquipment = {
-    equipment: 1, // default 1
+    equipment: 1,
     modelName: '',
     description: '',
     location: ''
   };
 
   constructor(private http: HttpClient, private router: Router) {}
-  
+
   addEquipment() {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token || ''}`
     });
 
-    const payload = {
-      id: 0,
-      ...this.newEquipment
-    };
+    const payload = { ...this.newEquipment };
 
     this.http.post('http://192.168.5.200:60776/api/Equipment', payload, {
       headers,
       responseType: 'text'
     }).subscribe({
-      next: res => {
-        console.log('✅ Respon dari server:', res);
-        alert('✅ Equipment berhasil ditambahkan!');
+      next: () => {
+        alert('Equipment berhasil ditambahkan!');
         this.newEquipment = {
           equipment: 1,
           modelName: '',
@@ -47,9 +43,8 @@ export class AddEquipmentComponent {
         };
         this.router.navigate(['/equipment']);
       },
-      error: err => {
-        console.error('❌ Gagal tambah equipment:', err);
-        alert('❌ Gagal menambahkan equipment.');
+      error: () => {
+        alert('Gagal menambahkan equipment.');
       }
     });
   }

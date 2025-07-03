@@ -35,9 +35,9 @@
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  font-size: 15px;
+  font-size: 13px;
   background-color: #fff;
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
@@ -48,16 +48,49 @@ thead {
 .user-table th,
 .user-table td {
   border: 1px solid #dee2ec;
-  padding: 10px 14px;
+  padding: 6px 8px;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   color: #3f3d56;
+  font-size: 13px;
 }
 
-.user-table td:last-child {
-  width: 120px; /* Lebih kecil biar muat */
+/* Ukuran tetap kolom */
+.user-table th:nth-child(1),
+.user-table td:nth-child(1) {
+  width: 60px; /* ID */
+}
+
+.user-table th:nth-child(2),
+.user-table td:nth-child(2) {
+  width: 130px; /* Email */
+}
+
+.user-table th:nth-child(3),
+.user-table td:nth-child(3) {
+  width: 130px; /* Nama Lengkap */
+}
+
+.user-table th:nth-child(4),
+.user-table td:nth-child(4) {
+  width: 120px; /* Perusahaan */
+}
+
+.user-table th:nth-child(5),
+.user-table td:nth-child(5) {
+  width: 120px; /* No. Telepon */
+}
+
+.user-table th:nth-child(6),
+.user-table td:nth-child(6) {
+  width: 100px; /* Role */
+}
+
+.user-table td:last-child,
+.user-table th:last-child {
+  width: 100px; /* Aksi */
 }
 
 .user-table tr:hover {
@@ -67,16 +100,15 @@ thead {
 .user-table input,
 .user-table select {
   width: 100%;
-  padding: 8px 10px;
-  font-size: 14px;
+  padding: 5px 6px;
+  font-size: 13px;
   border: 1px solid #ccc;
   border-radius: 6px;
-  box-sizing: border-box;
   background-color: #fdfdff;
   text-align: center;
+  box-sizing: border-box;
 }
 
-/* Tombol */
 .action-buttons {
   display: flex;
   justify-content: center;
@@ -85,10 +117,10 @@ thead {
 
 button {
   padding: 6px 10px;
-  font-size: 13px;
+  font-size: 8px;
   font-weight: 600;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
   transition: 0.2s ease;
 }
@@ -107,14 +139,14 @@ button:hover {
   color: white;
 }
 
-/* Responsif */
+/* Responsive */
 @media (max-width: 768px) {
   .user-wrapper {
     padding: 16px;
   }
 
   .user-table {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   button {

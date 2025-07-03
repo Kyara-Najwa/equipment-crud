@@ -1,0 +1,40 @@
+<div *ngIf="request" class="detail-card">
+  <img *ngIf="imageUrl" [src]="imageUrl" alt="Foto Request" class="detail-image" />
+
+  <div class="card-text">
+    <h2 class="headline">Request ID: {{ request.id }}</h2>
+    <p class="subheadline">
+      User: {{ request.userId }} |
+      {{ request.user?.fullName }} |
+      {{ request.user?.emailAddress }}
+    </p>
+    <p class="body">Company Name: {{ request.user?.companyName }}</p>
+    <p class="body">Contact: {{ request.user?.telp }}</p>
+    <p class="body">Latitude: {{ request.latitude }}</p>
+    <p class="body">Longitude: {{ request.longtitude }}</p>
+    <p class="body">Description: {{ request.description }}</p>
+    <p class="body">Status: {{ request.status }}</p>
+    <p class="body">Date: {{ request.createdate }}</p>
+    <p class="body">Created By: {{ request.createBy }}</p>
+
+    <hr class="section-divider" />
+
+    <div *ngIf="request.details?.length > 0" class="detail-services">
+      <h3 class="headline">Detail Services</h3>
+      <ul class="detail-list">
+        <li *ngFor="let detail of request.details" class="body">
+          ID Detail: {{ detail.idDetail }} | Service ID: {{ detail.serviceId }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="button-group">
+      <button class="secondary" (click)="goBack()">Back</button>
+      <button class="primary">Process</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!request">
+  <p>Memuat data...</p>
+</div>

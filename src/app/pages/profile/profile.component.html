@@ -1,19 +1,19 @@
 <div class="profile-page">
-  <!-- Sidebar Kiri -->
   <div class="profile-card">
     <img src="https://i.pinimg.com/736x/18/b5/b5/18b5b599bb873285bd4def283c0d3c09.jpg" alt="Profile" />
     <h2>{{ userData.fullName }}</h2>
-    <p>{{ userData.emailAddress }}</p>
-    <p>{{ userData.telp }}</p>
+    <p><i data-feather="mail" style="margin-right: 4px;"></i>{{ userData.emailAddress }}</p>
+    <p><i data-feather="phone" style="margin-right: 4px;"></i>{{ userData.telp }}</p>
+
+    <hr class="section-divider">
 
     <div class="profile-extra">
-      <p><strong>Company:</strong> {{ userData.companyName }}</p>
-      <p><strong>Role:</strong> {{ userData.roleName }}</p>
       <p><strong>User ID:</strong> {{ userData.id }}</p>
+      <p><strong>Company:</strong> {{ userData.companyName }}</p>
+      <p><strong>Role:</strong> <span class="role-badge">{{ userData.roleName }}</span></p>
     </div>
   </div>
 
-  <!-- Form Ganti Password -->
   <div class="profile-main">
     <div class="profile-card-form">
       <div class="profile-form-header">
@@ -23,39 +23,19 @@
       <div class="profile-form-body">
         <form (ngSubmit)="changePassword()" #form="ngForm">
           <div class="form-row">
-            <!-- Old Password -->
             <div class="form-group">
               <label for="oldPassword">Old Password:</label>
-              <input
-                id="oldPassword"
-                type="password"
-                name="oldPassword"
-                [(ngModel)]="passwordData.oldPassword"
-                #oldPass="ngModel"
-                required
-                minlength="6"
-                [class.invalid]="oldPass.invalid && oldPass.touched"
-              />
+              <input id="oldPassword" type="password" name="oldPassword" [(ngModel)]="passwordData.oldPassword" #oldPass="ngModel" required minlength="6" [class.invalid]="oldPass.invalid && oldPass.touched" />
               <div class="error-msg" *ngIf="oldPass.invalid && oldPass.touched">
-                Password must be at least 6 characters.
+                Password minimal 6 karakter.
               </div>
             </div>
 
-            <!-- New Password -->
             <div class="form-group">
               <label for="newPassword">New Password:</label>
-              <input
-                id="newPassword"
-                type="password"
-                name="newPassword"
-                [(ngModel)]="passwordData.newPassword"
-                #newPass="ngModel"
-                required
-                minlength="6"
-                [class.invalid]="newPass.invalid && newPass.touched"
-              />
+              <input id="newPassword" type="password" name="newPassword" [(ngModel)]="passwordData.newPassword" #newPass="ngModel" required minlength="6" [class.invalid]="newPass.invalid && newPass.touched" />
               <div class="error-msg" *ngIf="newPass.invalid && newPass.touched">
-                Password must be at least 6 characters.
+                Password minimal 6 karakter.
               </div>
             </div>
           </div>

@@ -1,6 +1,5 @@
-/* Halaman Tambah Equipment */
 .add-equipment-page {
-  background-color: #f0efff; /* Sama seperti halaman utama */
+  background-color: #f0efff;
   padding: 32px;
   min-height: 100vh;
   display: flex;
@@ -68,7 +67,6 @@ button:hover {
   background-color: #3a4bd6;
 }
 
-/* Responsif */
 @media (max-width: 768px) {
   .add-equipment-wrapper {
     padding: 16px;

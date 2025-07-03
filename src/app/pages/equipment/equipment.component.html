@@ -1,53 +1,46 @@
 <div class="equipment-page">
   <div class="equipment-wrapper">
     <h2 class="title">Data Equipment</h2>
-
-    <div class="container">
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th class="text-center">No</th>
-              <th class="text-center">ID</th>
-              <th class="text-center">Equipment</th>
-              <th class="text-center">Model Name</th>
-              <th class="text-center">Description</th>
-              <th class="text-center">Location</th>
-              <th class="text-center">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of equipmentList; let i = index">
-              <td class="text-center">{{ i + 1 }}</td>
-              <td class="text-center">{{ item.id }}</td>
-
-              <!-- Mode Edit -->
-              <ng-container *ngIf="editingEquipmentId === item.id; else normalRow">
-                <td><input [(ngModel)]="editEquipment.equipment" /></td>
-                <td><input [(ngModel)]="editEquipment.modelName" /></td>
-                <td><input [(ngModel)]="editEquipment.description" /></td>
-                <td><input [(ngModel)]="editEquipment.location" /></td>
-                <td class="action-buttons">
-                  <button (click)="saveEdit(item.id)">Simpan</button>
-                  <button (click)="cancelEdit()">Batal</button>
-                </td>
-              </ng-container>
-
-              <!-- Mode Normal -->
-              <ng-template #normalRow>
-                <td>{{ item.equipment }}</td>
-                <td>{{ item.modelName }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.location }}</td>
-                <td class="action-buttons">
-                  <button (click)="startEdit(item)">Edit</button>
-                  <button (click)="deleteEquipment(item.id)">Hapus</button>
-                </td>
-              </ng-template>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>ID</th>
+            <th>Equipment</th>
+            <th>Model Name</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of equipmentList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.id }}</td>
+            <ng-container *ngIf="editingEquipmentId === item.id; else normalRow">
+              <td><input [(ngModel)]="editEquipment.equipment" /></td>
+              <td><input [(ngModel)]="editEquipment.modelName" /></td>
+              <td><input [(ngModel)]="editEquipment.description" /></td>
+              <td><input [(ngModel)]="editEquipment.location" /></td>
+              <td class="action-buttons">
+                <button (click)="saveEdit(item.id)">Simpan</button>
+                <button (click)="cancelEdit()">Batal</button>
+              </td>
+            </ng-container>
+            <ng-template #normalRow>
+              <td>{{ item.equipment }}</td>
+              <td>{{ item.modelName }}</td>
+              <td>{{ item.description }}</td>
+              <td>{{ item.location }}</td>
+              <td class="action-buttons">
+                <button (click)="startEdit(item)">Edit</button>
+                <button (click)="deleteEquipment(item.id)">Hapus</button>
+              </td>
+            </ng-template>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

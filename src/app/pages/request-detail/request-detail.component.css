@@ -1,0 +1,85 @@
+.detail-card {
+  padding: 32px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fdfdff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.detail-image {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.card-text {
+  padding: 0 10px;
+}
+
+.headline {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #3f3d56;
+}
+
+.subheadline {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.body {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.section-divider {
+  margin: 24px 0;
+  border: none;
+  height: 1px;
+  background-color: #dcdcdc;
+}
+
+.detail-services .headline {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #4e60ff;
+}
+
+.detail-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+button.primary {
+  background-color: #4e60ff;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button.secondary {
+  background-color: #f0efff;
+  color: #4e60ff;
+  border: 1px solid #4e60ff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}

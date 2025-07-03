@@ -3,18 +3,16 @@ import { LoginComponent } from './pages/login/login.component';
 import { EquipmentComponent } from './pages/equipment/equipment.component';
 import { AddEquipmentComponent } from './pages/add-equipment/add-equipment.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { RequestDetailComponent } from './pages/request-detail/request-detail.component';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  // ✅ Halaman login & register (tanpa layout)
   { path: 'login', component: LoginComponent },
   {
     path: 'register',
     loadComponent: () =>
       import('./pages/register/register.component').then(m => m.RegisterComponent)
   },
-
-  // ✅ Halaman dengan layout + butuh login
   {
     path: '',
     component: MainLayoutComponent,
@@ -32,10 +30,19 @@ export const routes: Routes = [
         path: 'profile',
         loadComponent: () =>
           import('./pages/profile/profile.component').then(m => m.ProfileComponent)
+      },
+      {
+        path: 'request',
+        loadComponent: () =>
+          import('./pages/request/request.component').then(m => m.RequestComponent)
+      },
+      { path: 'request/:id', component: RequestDetailComponent },
+      {
+        path: 'request-form',
+        loadComponent: () =>
+          import('./pages/request-form/request-form.component').then(m => m.RequestFormComponent)
       }
     ]
   },
-
-  // ✅ Redirect fallback jika path tidak ditemukan
   { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];

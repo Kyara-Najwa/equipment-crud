@@ -27,7 +27,7 @@
 
       <div class="options">
         <label><input type="checkbox" /> Remember me</label>
-        <a href="#" class="link">Forgot password?</a>
+        <a class="link" href="#">Forgot password?</a>
       </div>
 
       <button type="submit" class="btn-primary" [disabled]="loginForm.invalid">Sign in</button>
@@ -35,7 +35,7 @@
 
     <p class="signup-text">
       Don't have an account?
-      <a routerLink="/register" class="link">Sign up</a>
+      <span class="link" (click)="goToRegister()">Sign up</span>
     </p>
 
     <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>

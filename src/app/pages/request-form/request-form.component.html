@@ -1,0 +1,46 @@
+<div class="form-container">
+  <h2>Create New Request</h2>
+
+  <label>No EQ</label>
+  <select [(ngModel)]="selectedEqId" [ngClass]="{ 'is-invalid': errorMessages.selectedEqId }">
+    <option value=""></option>
+    <option *ngFor="let eq of equipments" [value]="eq.id">{{ eq.modelName }}</option>
+  </select>
+  <div class="error-text" *ngIf="errorMessages.selectedEqId">{{ errorMessages.selectedEqId }}</div>
+
+  <label>Problem (pilih minimal satu)</label>
+  <div>
+    <label><input type="checkbox" (change)="handleProblemCheckbox($event, '12')" /> Layar Blank</label>
+  </div>
+  <div>
+    <label><input type="checkbox" (change)="handleProblemCheckbox($event, '13')" /> Hasil cetak tidak optimal</label>
+  </div>
+  <div>
+    <label><input type="checkbox" (change)="handleProblemCheckbox($event, '14')" /> Hasil Kotor</label>
+  </div>
+  <div class="error-text" *ngIf="errorMessages.problems">{{ errorMessages.problems }}</div>
+
+  <label>Description</label>
+  <textarea [(ngModel)]="description" [ngClass]="{ 'is-invalid': errorMessages.description }"></textarea>
+  <div class="error-text" *ngIf="errorMessages.description">{{ errorMessages.description }}</div>
+
+  <div class="latlong-row">
+    <div class="latlong-input">
+      <label>Latitude</label>
+      <input type="number" step="any" [(ngModel)]="latitude" [ngClass]="{ 'is-invalid': errorMessages.latitude }"/>
+      <div class="error-text" *ngIf="errorMessages.latitude">{{ errorMessages.latitude }}</div>
+    </div>
+
+    <div class="latlong-input">
+      <label>Longitude</label>
+      <input type="number" step="any" [(ngModel)]="longitude" [ngClass]="{ 'is-invalid': errorMessages.longitude }"/>
+      <div class="error-text" *ngIf="errorMessages.longitude">{{ errorMessages.longitude }}</div>
+    </div>
+  </div>
+
+  <label>Upload Gambar (Capture)</label>
+  <input type="file" (change)="onFileSelected($event)" [ngClass]="{ 'is-invalid': errorMessages.capture }"/>
+  <div class="error-text" *ngIf="errorMessages.capture">{{ errorMessages.capture }}</div>
+
+  <button (click)="submitRequest()">Submit</button>
+</div>

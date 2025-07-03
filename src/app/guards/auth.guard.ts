@@ -8,6 +8,6 @@ export const authGuard: CanActivateFn = () => {
   if (token) {
     return true;
   } else {
-    return router.parseUrl('/login'); // ✅ BUKAN "/"
+    return router.parseUrl('/login'); 
   }
 };

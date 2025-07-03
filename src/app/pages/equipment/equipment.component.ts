@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http'; 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-equipment',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './equipment.component.html',
   styleUrls: ['./equipment.component.css']
 })
@@ -55,35 +54,28 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       });
   }
 
-  addEquipment() {
+  addEquipment(): void {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token || ''}`
     });
 
-    const payload = {
-      id: 0,
-      ...this.newEquipment
-    };
+    const payload = { id: 0, ...this.newEquipment };
 
     this.http.post('http://192.168.5.200:60776/api/Equipment', payload, {
       headers,
       responseType: 'text'
     }).subscribe({
-      next: res => {
-        console.log('✅ Respon dari server:', res);
-        alert('✅ Equipment berhasil ditambahkan!');
+      next: () => {
+        alert('Equipment berhasil ditambahkan!');
         this.newEquipment = { equipment: null, modelName: '', description: '', location: '' };
         this.fetchData();
       },
-      error: err => {
-        console.error('❌ Gagal tambah equipment:', err);
-        alert('Gagal tambah equipment.');
-      }
+      error: () => alert('Gagal tambah equipment.')
     });
   }
 
-  deleteEquipment(id: number) {
+  deleteEquipment(id: number): void {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token || ''}`
@@ -95,19 +87,15 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       headers,
       responseType: 'text'
     }).subscribe({
-      next: res => {
-        console.log('✅ Respon hapus:', res);
-        alert('🗑️ Equipment berhasil dihapus!');
+      next: () => {
+        alert('Equipment berhasil dihapus!');
         this.fetchData();
       },
-      error: err => {
-        console.error('❌ Gagal hapus equipment:', err);
-        alert('Gagal hapus equipment.');
-      }
+      error: () => alert('Gagal hapus equipment.')
     });
   }
 
-  startEdit(item: any) {
+  startEdit(item: any): void {
     this.editingEquipmentId = item.id;
     this.editEquipment = {
       equipment: item.equipment,
@@ -115,45 +103,30 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       description: item.description,
       location: item.location
     };
-
-    // Kosongkan form tambah jika sedang edit
-    this.newEquipment = {
-      equipment: null,
-      modelName: '',
-      description: '',
-      location: ''
-    };
   }
 
-  cancelEdit() {
+  cancelEdit(): void {
     this.editingEquipmentId = null;
   }
 
-  saveEdit(id: number) {
+  saveEdit(id: number): void {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token || ''}`
     });
 
-    const updatedData = {
-      id,
-      ...this.editEquipment
-    };
+    const updatedData = { id, ...this.editEquipment };
 
-    this.http.put(`http://192.168.5.200:60776/api/Equipment`, updatedData, {
+    this.http.put('http://192.168.5.200:60776/api/Equipment', updatedData, {
       headers,
       responseType: 'text'
     }).subscribe({
-      next: res => {
-        console.log('✅ Respon update:', res);
-        alert('✏️ Equipment berhasil diperbarui!');
+      next: () => {
+        alert('Equipment berhasil diperbarui!');
         this.editingEquipmentId = null;
         this.fetchData();
       },
-      error: err => {
-        console.error('❌ Gagal update equipment:', err);
-        alert('Gagal update equipment.');
-      }
+      error: () => alert('Gagal update equipment.')
     });
   }
 }

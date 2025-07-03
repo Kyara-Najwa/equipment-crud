@@ -15,7 +15,6 @@ export class ProfileComponent implements OnInit {
   userData: any = null;
   loading = true;
   error = '';
-  showPasswordForm = false;
 
   passwordData = {
     oldPassword: '',
@@ -54,7 +53,7 @@ export class ProfileComponent implements OnInit {
     const token = localStorage.getItem('token');
 
     if (!this.passwordData.oldPassword.trim() || !this.passwordData.newPassword.trim()) {
-      alert('❌ Semua field wajib diisi.');
+      alert('Semua field wajib diisi.');
       return;
     }
 
@@ -68,30 +67,21 @@ export class ProfileComponent implements OnInit {
       NewPassword: this.passwordData.newPassword
     };
 
-    console.log('📦 Body yang dikirim:', body);
-    console.log('🔐 Token yang digunakan:', token);
-
     this.http.post('http://192.168.5.200:60776/api/User/ChangePassword', body, {
       headers,
-      responseType: 'text' 
+      responseType: 'text'
     }).subscribe({
       next: () => {
-        alert('✅ Password berhasil diganti.');
-        this.passwordData.oldPassword = '';
-        this.passwordData.newPassword = '';
-        this.showPasswordForm = false;
-
+        alert('Password berhasil diganti.');
+        this.passwordData = { oldPassword: '', newPassword: '' };
         localStorage.clear();
         window.location.href = '/login';
       },
       error: (err) => {
-        console.error('❌ Gagal ganti password:', err);
-        console.log('📥 Detail error dari server:', err.error);
-
         if (err.status === 400) {
-          alert('⚠️ Password lama salah atau format password baru tidak valid.');
+          alert('Password lama salah atau format password baru tidak valid.');
         } else {
-          alert(`❌ Terjadi kesalahan. Status ${err.status}: ${err.statusText}`);
+          alert(`Terjadi kesalahan. Status ${err.status}: ${err.statusText}`);
         }
       }
     });

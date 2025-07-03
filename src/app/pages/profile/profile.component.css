@@ -1,24 +1,31 @@
 .profile-page {
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
-  padding: 40px;
+  gap: 24px;
+  padding: 20px;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f5f7fb;
-  min-height: 100vh;
+  background-color: #f0efff;
+  max-height: 100vh;
   box-sizing: border-box;
 }
 
-/* SIDEBAR */
 .profile-card {
   background-color: #ffffff;
-  border-radius: 20px;
-  padding: 32px 24px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
-  width: 320px;
+  border-left: 4px solid #4e60ff;
+  border-radius: 16px;
+  padding: 24px 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 240px;
+  height: 400px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin-bottom: 200px;
+}
+
+.profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08);
 }
 
 .profile-card img {
@@ -26,39 +33,73 @@
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 20px;
+  margin: 24px auto 16px auto;
   border: 4px solid #eaeaea;
+  align-self: center;
+}
+
+.profile-card img:hover {
+  border: 4px solid #4e60ff;
+  transition: border-color 0.3s ease;
+}
+
+.profile-card svg.feather {
+  width: 14px;
+  height: 14px;
+  margin-right: 10px;
+  padding-right: 10px;
+  padding-bottom: 2px;
+  vertical-align: middle;
+  stroke-width: 2;
+  color: #4e60ff;
+}
+
+.role-badge {
+  background-color: #4e60ff;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-left: 4px;
 }
 
 .profile-card h2 {
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 700;
   color: #2c3e50;
-  margin: 10px 0 6px;
-  text-align: center;
+  text-align: left;
+  margin: 4px 0;
+  margin-left: 30px;
 }
 
 .profile-card p {
-  font-size: 20px;
+  font-size: 14px;
   color: #555;
-  text-align: center;
-  margin: 2px 0 6px;
+  text-align: left;
+  padding-left: 30px;
+  margin: 2px 0;
   line-height: 1.4;
 }
 
+.section-divider {
+  margin: 24px auto;       
+  border: none;
+  height: 1px;
+  width: 80%;                
+  background-color: #dcdcdc;
+  border-radius: 5px;
+}
+
+
 .profile-extra {
-  margin-top: 20px;
   width: 100%;
 }
 
 .profile-extra p {
-  font-size: 18px;
-  margin: 8px 0;
+  font-size: 14px;
   color: #333;
   display: flex;
-  align-items: center;
   gap: 6px;
-  justify-content: center;
 }
 
 .profile-extra strong {
@@ -66,10 +107,10 @@
   color: #1f1f1f;
 }
 
-/* FORM SECTION */
 .profile-main {
   flex: 1;
-  min-width: 600px;
+  max-width: 600px;
+  min-width: 0;
 }
 
 .profile-card-form {
@@ -78,28 +119,27 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
+  max-width: 100%;
 }
 
 .profile-form-header {
   background-color: #4e60ff;
   color: white;
-  padding: 24px 32px;
+  padding: 16px 24px;
 }
 
 .profile-form-header h3 {
-  font-size: 20px;
+  font-size: 18px;
   margin: 0;
 }
 
 .profile-form-body {
-  padding: 32px;
+  padding: 24px;
 }
 
 .form-row {
   display: flex;
-  gap: 32px;
+  gap: 20px;
   width: 100%;
 }
 
@@ -117,7 +157,7 @@
 }
 
 .form-group input {
-  padding: 10px 14px;
+  padding: 8px 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 14px;
@@ -126,7 +166,6 @@
   box-sizing: border-box;
 }
 
-/* Validasi Visual */
 .form-group input.invalid {
   border-color: #e74c3c;
   background-color: #fff6f6;
@@ -138,15 +177,14 @@
   margin-top: 6px;
 }
 
-/* Tombol Submit */
 .form-button-wrapper {
-  margin-top: 24px;
+  margin-top: 20px;
   text-align: right;
   width: 100%;
 }
 
 .update-button {
-  padding: 10px 20px;
+  padding: 8px 16px;
   background-color: #4e60ff;
   color: white;
   border: none;
@@ -160,14 +198,14 @@
   background-color: #3c4bdc;
 }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
   .profile-page {
     flex-direction: column;
+    align-items: center;
   }
 
   .profile-main {
-    min-width: 100%;
+    max-width: 100%;
   }
 
   .form-row {
