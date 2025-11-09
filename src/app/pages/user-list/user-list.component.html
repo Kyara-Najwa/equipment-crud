@@ -1,50 +1,55 @@
-<div class="user-list-page">
-  <div class="user-wrapper">
-    <h2 class="title">Daftar Seluruh User</h2>
+<div class="bg-[#f0efff] min-h-screen p-8 flex justify-center items-start font-sans">
+  <div class="w-full max-w-7xl bg-white p-7 rounded-2xl shadow-md">
+    <h2 class="text-center text-[26px] font-bold text-[#3f3d56] mb-7">Daftar Seluruh User</h2>
 
-    <div class="table-wrapper">
-      <table class="user-table">
-        <thead>
+    <div class="overflow-x-auto w-full">
+      <table class="w-full border-collapse table-fixed text-[13px] bg-white rounded-lg overflow-hidden">
+        <thead class="bg-[#e4e7f5]">
           <tr>
-            <th>ID</th>
-            <th>Email</th>
-            <th>Nama Lengkap</th>
-            <th>Perusahaan</th>
-            <th>No. Telepon</th>
-            <th>Role</th>
-            <th>Aksi</th>
+            <th class="w-[60px] border border-[#dee2ec] px-2 py-1 text-[#3f3d56]">ID</th>
+            <th class="w-[130px] border border-[#dee2ec] px-2 py-1 text-[#3f3d56]">Email</th>
+            <th class="w-[130px] border border-[#dee2ec] px-2 py-1 text-[#3f3d56]">Nama Lengkap</th>
+            <th class="w-[120px] border border-[#dee2ec] px-2 py-1 text-[#3f3d56]">Perusahaan</th>
+            <th class="w-[120px] border border-[#dee2ec] px-2 py-1 text-[#3f3d56]">No. Telepon</th>
+            <th class="w-[100px] border border-[#dee2ec] px-2 py-1 text-[#3f3d56]">Role</th>
+            <th class="w-[100px] border border-[#dee2ec] px-2 py-1 text-[#3f3d56]">Aksi</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of users">
+          <tr *ngFor="let user of users" class="hover:bg-[#f3f4fd]">
             <ng-container *ngIf="editUserId === user.id; else viewRow">
-              <td>{{ user.id }}</td>
-              <td><input [(ngModel)]="editedUser.emailAddress" /></td>
-              <td><input [(ngModel)]="editedUser.fullName" /></td>
-              <td><input [(ngModel)]="editedUser.companyName" /></td>
-              <td><input [(ngModel)]="editedUser.telp" /></td>
-              <td>
-                <select [(ngModel)]="editedUser.roleId">
+              <td class="border border-[#dee2ec] px-2 py-1">{{ user.id }}</td>
+              <td class="border border-[#dee2ec] px-2 py-1"><input [(ngModel)]="editedUser.emailAddress" class="w-full p-1 text-center text-[13px] border border-gray-300 rounded-md bg-[#fdfdff]" /></td>
+              <td class="border border-[#dee2ec] px-2 py-1"><input [(ngModel)]="editedUser.fullName" class="w-full p-1 text-center text-[13px] border border-gray-300 rounded-md bg-[#fdfdff]" /></td>
+              <td class="border border-[#dee2ec] px-2 py-1"><input [(ngModel)]="editedUser.companyName" class="w-full p-1 text-center text-[13px] border border-gray-300 rounded-md bg-[#fdfdff]" /></td>
+              <td class="border border-[#dee2ec] px-2 py-1"><input [(ngModel)]="editedUser.telp" class="w-full p-1 text-center text-[13px] border border-gray-300 rounded-md bg-[#fdfdff]" /></td>
+              <td class="border border-[#dee2ec] px-2 py-1">
+                <select [(ngModel)]="editedUser.roleId" class="w-full p-1 text-center text-[13px] border border-gray-300 rounded-md bg-[#fdfdff]">
                   <option [value]="1">Admin</option>
                   <option [value]="2">User</option>
+                  <option [value]="3">Customer Care</option>
                 </select>
               </td>
-              <td class="action-buttons">
-                <button (click)="saveEdit()">Simpan</button>
-                <button (click)="cancelEdit()">Batal</button>
+              <td class="border border-[#dee2ec] px-2 py-1">
+                <div class="flex justify-center gap-1">
+                  <button (click)="saveEdit()" class="bg-[#4e60ff] text-white text-xs font-semibold px-2 py-1 rounded-md hover:opacity-90">Simpan</button>
+                  <button (click)="cancelEdit()" class="bg-[#ff5b5b] text-white text-xs font-semibold px-2 py-1 rounded-md hover:opacity-90">Batal</button>
+                </div>
               </td>
             </ng-container>
 
             <ng-template #viewRow>
-              <td>{{ user.id }}</td>
-              <td>{{ user.emailAddress }}</td>
-              <td>{{ user.fullName }}</td>
-              <td>{{ user.companyName }}</td>
-              <td>{{ user.telp }}</td>
-              <td>{{ user.roleName }}</td>
-              <td class="action-buttons">
-                <button (click)="startEdit(user)">Edit</button>
-                <button (click)="deleteUser(user.id)">Hapus</button>
+              <td class="border border-[#dee2ec] px-2 py-1">{{ user.id }}</td>
+              <td class="border border-[#dee2ec] px-2 py-1">{{ user.emailAddress }}</td>
+              <td class="border border-[#dee2ec] px-2 py-1">{{ user.fullName }}</td>
+              <td class="border border-[#dee2ec] px-2 py-1">{{ user.companyName }}</td>
+              <td class="border border-[#dee2ec] px-2 py-1">{{ user.telp }}</td>
+              <td class="border border-[#dee2ec] px-2 py-1">{{ user.roleName }}</td>
+              <td class="border border-[#dee2ec] px-2 py-1">
+                <div class="flex justify-center gap-1">
+                  <button (click)="startEdit(user)" class="bg-[#4e60ff] text-white text-xs font-semibold px-2 py-1 rounded-md hover:opacity-90">Edit</button>
+                  <button (click)="deleteUser(user.id)" class="bg-[#ff5b5b] text-white text-xs font-semibold px-2 py-1 rounded-md hover:opacity-90">Hapus</button>
+                </div>
               </td>
             </ng-template>
           </tr>

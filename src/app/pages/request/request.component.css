@@ -1,165 +1,360 @@
 .request-page {
-  padding: 32px;
-  padding-top: 0%;
+  padding: 32px 32px 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f0efff;
+  background: #f0efff;
   min-height: 100vh;
 }
 
 .title {
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 24px;
   text-align: center;
 }
 
+/* --- search & filter --- */
 .search-section {
   display: flex;
   gap: 12px;
   margin-bottom: 24px;
 }
-
 .search-section input {
   flex: 1;
   padding: 10px;
-  border-radius: 6px;
   border: 1px solid #ccc;
-}
-
-.search-section button {
-  padding: 10px 16px;
-  border: none;
   border-radius: 6px;
-  background-color: #4e60ff;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
 }
-
+.search-section button,
 .create-button {
   padding: 10px 16px;
   border: none;
   border-radius: 6px;
-  background-color: #ff4e69;
-  color: white;
   cursor: pointer;
   font-size: 14px;
-  transition: background-color 0.2s ease;
-}
-
-.create-button:hover {
-  background-color: #e7435b;
-}
-
-.request-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px;
-}
-
-.card {
-  background-color: #fff;
-  border-radius: 20px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  padding: 16px;
-  display: flex;
-  justify-content: center;
-  transition: transform 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-}
-
-.card-inner {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.card-image-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.card-image {
-  width: 100%;
-  max-width: 250px;
-  height: 150px;
-  border-radius: 12px;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  background-color: #d6f5e3;
-}
-
-.card-text {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.card-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #2c2c2c;
-  text-align: left;
-  margin: 10px 0;
-}
-
-.card-subtitle {
-  font-size: 16px;
-  font-weight: 500;
-  color: #555;
-  text-align: left;
-  margin: 0;
-}
-
-.card-description {
-  font-size: 12px;
-  color: #666;
-  text-align: left;
-}
-
-.card-button {
-  display: inline-block;
-  text-align: center;
-  font-size: 14px;
   font-weight: 600;
-  padding: 8px 16px;
   color: #fff;
   background: #4e60ff;
+  transition: 0.2s;
+}
+.create-button {
+  background: #0040c1;
+}
+.create-button:hover {
+  background: #0032a6;
+}
+
+.filter-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.filter-section button {
+  padding: 8px 16px;
+  border: 2px solid #4e60ff;
+  background: #fff;
+  color: #4e60ff;
+  font-weight: 600;
   border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.filter-section button:hover,
+.filter-section .active-filter {
+  background: #4e60ff;
+  color: #fff;
+}
+
+/* --- card --- */
+.request-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  position: relative;
+}
+.card-status {
+  background: #4e60ff;
+  color: #fff;
+  font-weight: 700;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+}
+.reject-header {
+  background: #628ecb;
+}
+.card-inner-row {
+  display: flex;
+  padding: 16px;
+  gap: 12px;
+  border-top: 1px solid #ddd;
+}
+.rejected-card {
+  align-items: center;
+}
+.card-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 8px;
+  border-left: 1px solid #e0e0e0;
+}
+.card-col:first-child {
+  border-left: none;
+}
+.card-date,
+.card-id,
+.card-eq,
+.card-desc {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+}
+.card-desc {
+  font-weight: 500;
+}
+
+/* status badge colours */
+.status-open {
+  background: #b1c9ef;
+  color: #fff;
+}
+.status-process {
+  background: #8aaee0;
+  color: #fff;
+}
+.status-close {
+  background: #395886;
+  color: #fff;
+}
+.status-reject {
+  background: #628ecb;
+  color: #fff;
+}
+.status-unknown {
+  background: #adb5bd;
+  color: #000;
+}
+
+/* status column */
+.card-col.status {
+  align-items: center;
+  text-align: center;
+  flex: 1.5;
+}
+
+/* --- status flow & step --- */
+.status-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.step {
+  font-size: 16px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  color: #fff;
+}
+.step svg.feather,
+.step.waiting .feather {
+  width: 12px;
+  height: 12px;
+  stroke: white;
+}
+.step.waiting {
+  background: #28a745;
+}
+.step.done {
+  background: #28a745;
+}
+.step.rejected {
+  background: #dc3545;
+}
+.step.process {
+  background: #fff;
+  padding: 2px;
+}
+.step.process img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+.line {
+  height: 4px;
+  width: 40px;
+  background: #28a745;
+}
+.status-labels {
+  display: flex;
+  justify-content: space-around;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  width: 100%;
+  margin-top: 4px;
+}
+.status-labels.single {
+  justify-content: center;
+}
+
+/* --- buttons --- */
+.card-col.right {
+  align-items: flex-end;
+  justify-content: center;
+  text-align: right;
+}
+.card-col.right {
+  align-items: flex-end;
+  justify-content: center;
+  text-align: right;
+}
+
+.action-group {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-end;
+}
+.action-group-2x2 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row-btn {
+  display: flex;
+  gap: 12px;
+}
+
+.process-button,
+.delete-button,
+.reject-button,
+.detail-button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  margin: 5px;
+  transition: 0.2s;
+}
+.process-button {
+  background: #4e60ff;
+  color: #fff;
+}
+.process-button:hover {
+  background: #354bff;
+}
+.delete-button {
+  background: #dc3545;
+  color: #fff;
+}
+.delete-button:hover {
+  background: #bb2d3b;
+}
+.reject-button {
+  background: #628ecb;
+  color: #fff;
+  text-align: center;
+}
+.detail-button {
+  background: #003a8c;
+  color: #fff;
+  text-align: center;
   text-decoration: none;
-  transition: opacity 0.2s;
+}
+.detail-button:hover {
+  background: #002d6b;
 }
 
-.card-button:hover {
-  opacity: 0.9;
+/* --- modal --- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
-
-.button-wrapper {
-  margin-top: 12px;
+.modal-content {
+  background: #fff;
+  padding: 24px;
+  border-radius: 16px;
+  width: 360px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.note-input {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  resize: none;
+  margin-bottom: 16px;
+}
+.modal-actions {
   display: flex;
   justify-content: flex-end;
+  gap: 12px;
 }
-
-.delete-button {
+.modal-no {
   padding: 8px 16px;
-  margin-right: 8px;
-  background-color: #ff4e4e;
-  color: white;
+  background: #fff;
+  color: #dc3545;
+  border: 2px solid #dc3545;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.modal-yes {
+  padding: 8px 16px;
+  background: #4e60ff;
+  color: #fff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
   font-weight: 600;
-  transition: background-color 0.2s;
 }
 
-.delete-button:hover {
-  background-color: #d94444;
+/* --- responsive --- */
+@media (max-width: 768px) {
+  .card-inner-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .card-col {
+    border-left: none !important;
+    padding: 8px 0;
+  }
+  .card-col.right {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+    text-align: left;
+  }
 }

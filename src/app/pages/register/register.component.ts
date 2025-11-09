@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service'; // ⬅️ Tambahkan ini
 
 @Component({
   selector: 'app-register',
@@ -18,10 +19,15 @@ export class RegisterComponent implements OnInit {
     fullName: '',
     companyName: '',
     telp: '',
-    roleId: 2
+    roleId: 2,
+    latitude: null,
+    longitude: null
   };
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService // ⬅️ Tambahkan ini
+  ) {}
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
@@ -37,28 +43,28 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  getUserLocation(): Promise<GeolocationCoordinates> {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      reject('Geolocation tidak didukung browser');
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => resolve(position.coords),
+      (error) => reject(error.message)
+    );
+  });
+}
+
+
   registerUser(): void {
-    if (
-      !this.user.emailAddress.trim() ||
-      !this.user.password.trim() ||
-      !this.user.fullName.trim() ||
-      !this.user.companyName.trim() ||
-      !this.user.telp.trim()
-    ) {
+    const u = this.user;
+    if (!u.emailAddress.trim() || !u.password.trim() || !u.fullName.trim() || !u.companyName.trim() || !u.telp.trim()) {
       alert('Semua field wajib diisi.');
       return;
     }
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    const url = 'http://192.168.5.200:60776/api/General/Register';
-
-    this.http.post(url, this.user, {
-      headers,
-      responseType: 'text'
-    }).subscribe({
+    this.authService.register(this.user).subscribe({
       next: () => {
         alert('Pendaftaran berhasil! Silakan login.');
         this.router.navigate(['/']);

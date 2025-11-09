@@ -4,6 +4,7 @@ import { EquipmentComponent } from './pages/equipment/equipment.component';
 import { AddEquipmentComponent } from './pages/add-equipment/add-equipment.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { RequestDetailComponent } from './pages/request-detail/request-detail.component';
+import { RoleListComponent } from './pages/role-list/role-list.component';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -41,6 +42,11 @@ export const routes: Routes = [
         path: 'request-form',
         loadComponent: () =>
           import('./pages/request-form/request-form.component').then(m => m.RequestFormComponent)
+      },
+      {
+        path: 'role-list',
+        loadComponent: () => 
+          import('./pages/role-list/role-list.component').then(m => m.RoleListComponent)
       }
     ]
   },

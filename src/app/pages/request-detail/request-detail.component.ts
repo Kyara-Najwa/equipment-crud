@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RequestService } from '../request-service/request-service.component';
+import { RequestService } from '../../services/request.service';
 
 @Component({
   selector: 'app-request-detail',
@@ -21,34 +21,24 @@ export class RequestDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) this.fetchRequest(id);
+  const id = this.route.snapshot.paramMap.get('id');
+  if (id) this.fetchRequest(id);
   }
 
   fetchRequest(id: string): void {
-    this.requestService.getRequestById(id).subscribe({
-      next: (res: any) => {
-        this.request = res;
-        if (res?.capture) {
-          this.loadImage(res.capture);
-        }
+  this.requestService.getRequestById(id).subscribe({
+    next: (res) => {
+      this.request = res;
+      if (res.capture) this.loadImage(res.capture);
       },
-      error: () => {
-        alert('Gagal mengambil detail request.');
-      }
+    error: () => alert('Gagal mengambil detail request.')
     });
   }
 
   loadImage(capture: string): void {
-    this.requestService.getFile(capture).subscribe({
-      next: (blob: Blob) => {
-        this.imageUrl = URL.createObjectURL(blob);
-      },
-      error: err => {
-        if (err.status === 401) {
-          alert('Gagal menampilkan gambar. Akses ditolak.');
-        }
-      }
+  this.requestService.getFile(capture).subscribe({
+    next: (blob) => this.imageUrl = URL.createObjectURL(blob),
+    error: () => alert('Gagal menampilkan gambar.')
     });
   }
 

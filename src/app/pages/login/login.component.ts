@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { AuthService, UserData } from '../../auth-service/auth-service.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService, UserData } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,6 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
     private router: Router,
     private authService: AuthService
   ) {
@@ -37,25 +36,24 @@ export class LoginComponent {
 
     const credentials = this.loginForm.value;
 
-    this.http.post<any>('http://192.168.5.200:60776/api/General/Login', credentials).subscribe({
-      next: (res) => {
-        localStorage.setItem('token', res.accessToken || '');
+    this.authService.login(credentials).subscribe({
+  next: (res) => {
+    const userData: UserData = {
+      userId: res.userId,
+      name: res.fullName || res.name,
+      email: res.emailAddress || res.email,
+      roleName: res.roleName
+    };
 
-        const userData: UserData = {
-          name: res.name,
-          email: res.email,
-          roleName: res.roleName,
-          userId: res.userId
-        };
+    localStorage.setItem('token', res.accessToken || '');
+    localStorage.setItem('userId', String(res.userId));
+    this.authService.setUser(userData);
+    this.router.navigate(['/equipment']);
+  },
+  error: () => {
+    this.errorMessage = 'Email atau password salah!';
+  }
+});
 
-        localStorage.setItem('user', JSON.stringify(userData));
-        this.authService.setUser(userData);
-
-        this.router.navigate(['/equipment']);
-      },
-      error: () => {
-        this.errorMessage = 'Email atau password salah!';
-      }
-    });
   }
 }

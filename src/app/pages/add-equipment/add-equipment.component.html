@@ -1,21 +1,73 @@
-<div class="add-equipment-page">
-  <div class="add-equipment-wrapper">
-    <h2 class="title">Tambah Equipment</h2>
-    <form (ngSubmit)="addEquipment()" #form="ngForm" class="form">
-      
-      <input type="number" name="equipment" [(ngModel)]="newEquipment.equipment" placeholder="Equipment" #equipmentInput="ngModel" required min="1" />
-      <small *ngIf="equipmentInput.invalid && equipmentInput.touched">Nilai equipment wajib diisi & minimal 1</small>
+<div class="bg-[#f0efff] min-h-screen px-8 py-8 flex justify-center items-start font-['Segoe_UI']">
+  <div class="bg-white w-full max-w-xl p-8 rounded-2xl shadow-md">
+    <h2 class="text-center text-2xl font-bold text-[#3f3d56] mb-6">Tambah Equipment</h2>
 
-      <input name="modelName" [(ngModel)]="newEquipment.modelName" placeholder="Model Name" required #modelNameInput="ngModel" />
-      <small *ngIf="modelNameInput.invalid && modelNameInput.touched">Model name tidak boleh kosong</small>
+    <form (ngSubmit)="addEquipment()" #form="ngForm" class="flex flex-col gap-4 w-full">
 
-      <input name="description" [(ngModel)]="newEquipment.description" placeholder="Description" required #descriptionInput="ngModel" />
-      <small *ngIf="descriptionInput.invalid && descriptionInput.touched">Deskripsi tidak boleh kosong</small>
+      <div>
+        <input
+          type="number"
+          name="equipment"
+          [(ngModel)]="newEquipment.equipment"
+          placeholder="Equipment"
+          #equipmentInput="ngModel"
+          required
+          min="1"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm bg-[#fdfdff] focus:outline-none focus:border-[#4e60ff]"
+        />
+        <small *ngIf="equipmentInput.invalid && equipmentInput.touched" class="text-red-600 text-xs">
+          Nilai equipment wajib diisi & minimal 1
+        </small>
+      </div>
 
-      <input name="location" [(ngModel)]="newEquipment.location" placeholder="Location" required #locationInput="ngModel" />
-      <small *ngIf="locationInput.invalid && locationInput.touched">Lokasi tidak boleh kosong</small>
+      <div>
+        <input
+          name="modelName"
+          [(ngModel)]="newEquipment.modelName"
+          placeholder="Model Name"
+          required
+          #modelNameInput="ngModel"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm bg-[#fdfdff] focus:outline-none focus:border-[#4e60ff]"
+        />
+        <small *ngIf="modelNameInput.invalid && modelNameInput.touched" class="text-red-600 text-xs">
+          Model name tidak boleh kosong
+        </small>
+      </div>
 
-      <button type="submit" [disabled]="form.invalid">Tambah</button>
+      <div>
+        <input
+          name="description"
+          [(ngModel)]="newEquipment.description"
+          placeholder="Description"
+          required
+          #descriptionInput="ngModel"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm bg-[#fdfdff] focus:outline-none focus:border-[#4e60ff]"
+        />
+        <small *ngIf="descriptionInput.invalid && descriptionInput.touched" class="text-red-600 text-xs">
+          Deskripsi tidak boleh kosong
+        </small>
+      </div>
+
+      <div>
+        <input
+          name="location"
+          [(ngModel)]="newEquipment.location"
+          placeholder="Location"
+          required
+          #locationInput="ngModel"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm bg-[#fdfdff] focus:outline-none focus:border-[#4e60ff]"
+        />
+        <small *ngIf="locationInput.invalid && locationInput.touched" class="text-red-600 text-xs">
+          Lokasi tidak boleh kosong
+        </small>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-[#4e60ff] text-white py-2 px-4 font-semibold text-sm rounded-md hover:bg-[#3a4bd6] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Tambah
+      </button>
     </form>
   </div>
 </div>

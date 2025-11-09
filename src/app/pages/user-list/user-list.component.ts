@@ -1,7 +1,9 @@
+// src/app/pages/user-list/user-list.component.ts
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-list',
@@ -14,26 +16,15 @@ export class UserListComponent implements OnInit {
   users: any[] = [];
   editUserId: number | null = null;
   editedUser: any = {};
-  private baseUrl = 'http://192.168.5.200:60776';
 
-  constructor(private http: HttpClient) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.fetchUsers();
   }
 
-  getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token') || '';
-    return new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-  }
-
   fetchUsers(): void {
-    this.http.get<any[]>(`${this.baseUrl}/api/User`, {
-      headers: this.getAuthHeaders()
-    }).subscribe({
+    this.userService.getAll().subscribe({
       next: data => this.users = data,
       error: () => alert('Gagal mengambil data user.')
     });
@@ -50,19 +41,7 @@ export class UserListComponent implements OnInit {
   }
 
   saveEdit(): void {
-    const payload = {
-      id: this.editedUser.id,
-      emailAddress: this.editedUser.emailAddress,
-      fullName: this.editedUser.fullName,
-      companyName: this.editedUser.companyName,
-      telp: this.editedUser.telp,
-      roleId: this.editedUser.roleId
-    };
-
-    this.http.put(`${this.baseUrl}/api/User`, payload, {
-      headers: this.getAuthHeaders(),
-      responseType: 'text'
-    }).subscribe({
+    this.userService.update(this.editedUser).subscribe({
       next: () => {
         alert('Data user berhasil diperbarui.');
         this.cancelEdit();
@@ -73,13 +52,9 @@ export class UserListComponent implements OnInit {
   }
 
   deleteUser(id: number): void {
-    const confirmDelete = confirm('Yakin ingin menghapus user ini?');
-    if (!confirmDelete) return;
+    if (!confirm('Yakin ingin menghapus user ini?')) return;
 
-    this.http.delete(`${this.baseUrl}/api/User/${id}`, {
-      headers: this.getAuthHeaders(),
-      responseType: 'text'
-    }).subscribe({
+    this.userService.delete(id).subscribe({
       next: () => {
         alert('User berhasil dihapus.');
         this.fetchUsers();

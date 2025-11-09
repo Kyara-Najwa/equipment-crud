@@ -25,15 +25,15 @@
           <div class="form-row">
             <div class="form-group">
               <label for="oldPassword">Old Password:</label>
-              <input id="oldPassword" type="password" name="oldPassword" [(ngModel)]="passwordData.oldPassword" #oldPass="ngModel" required minlength="6" [class.invalid]="oldPass.invalid && oldPass.touched" />
+              <input id="oldPassword" type="password" name="oldPassword" [(ngModel)]="passwordData.oldPassword" #oldPass="ngModel" required minlength="4" [class.invalid]="oldPass.invalid && oldPass.touched" />
               <div class="error-msg" *ngIf="oldPass.invalid && oldPass.touched">
-                Password minimal 6 karakter.
+                Password minimal 4 karakter.
               </div>
             </div>
 
             <div class="form-group">
               <label for="newPassword">New Password:</label>
-              <input id="newPassword" type="password" name="newPassword" [(ngModel)]="passwordData.newPassword" #newPass="ngModel" required minlength="6" [class.invalid]="newPass.invalid && newPass.touched" />
+              <input id="newPassword" type="password" name="newPassword" [(ngModel)]="passwordData.newPassword" #newPass="ngModel" required minlength="4" [class.invalid]="newPass.invalid && newPass.touched" />
               <div class="error-msg" *ngIf="newPass.invalid && newPass.touched">
                 Password minimal 6 karakter.
               </div>

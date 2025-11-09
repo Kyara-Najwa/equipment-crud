@@ -13,16 +13,16 @@
       <small *ngIf="loginForm.get('emailAddress')?.touched && loginForm.get('emailAddress')?.errors?.['email']" style="color:red;">
         Format email tidak valid.
       </small>
-
+ 
       <label>Password</label>
       <div class="password-wrapper">
         <input formControlName="password" placeholder="Enter your password" type="password" />
       </div>
       <small *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']" style="color:red;">
-        Password wajib diisi.
+        Password wajib diisi
       </small>
       <small *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['minlength']" style="color:red;">
-        Password minimal 4 karakter.
+        Password minimal 4 karakter
       </small>
 
       <div class="options">

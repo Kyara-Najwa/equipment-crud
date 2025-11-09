@@ -27,13 +27,13 @@
   <div class="latlong-row">
     <div class="latlong-input">
       <label>Latitude</label>
-      <input type="number" step="any" [(ngModel)]="latitude" [ngClass]="{ 'is-invalid': errorMessages.latitude }"/>
+      <input type="number" step="any" [(ngModel)]="latitude" [ngClass]="{ 'is-invalid': errorMessages.latitude }" readonly/>
       <div class="error-text" *ngIf="errorMessages.latitude">{{ errorMessages.latitude }}</div>
     </div>
 
     <div class="latlong-input">
       <label>Longitude</label>
-      <input type="number" step="any" [(ngModel)]="longitude" [ngClass]="{ 'is-invalid': errorMessages.longitude }"/>
+      <input type="number" step="any" [(ngModel)]="longitude" [ngClass]="{ 'is-invalid': errorMessages.longitude }" readonly/>
       <div class="error-text" *ngIf="errorMessages.longitude">{{ errorMessages.longitude }}</div>
     </div>
   </div>

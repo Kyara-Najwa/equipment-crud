@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnInit, inject } from '@angular/core';
+import { GEOLOCATION } from '@ng-web-apis/geolocation';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RequestService } from '../../services/request.service';
 
 @Component({
   selector: 'app-request-form',
@@ -12,6 +13,8 @@ import { CommonModule } from '@angular/common';
   imports: [FormsModule, CommonModule]
 })
 export class RequestFormComponent implements OnInit {
+  private geolocation = inject(GEOLOCATION);
+
   equipments: any[] = [];
   selectedEqId: string = '';
   problems: string[] = [];
@@ -19,7 +22,6 @@ export class RequestFormComponent implements OnInit {
   selectedFile: File | null = null;
   latitude: number = 0;
   longitude: number = 0;
-  baseUrl = 'http://192.168.5.200:60776';
 
   errorMessages: any = {
     selectedEqId: '',
@@ -28,26 +30,29 @@ export class RequestFormComponent implements OnInit {
     longitude: ''
   };
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private requestService: RequestService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.getEquipments();
-  }
-
-  getEquipments(): void {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+    this.requestService.getEquipments().subscribe({
+      next: (data) => this.equipments = data,
+      error: () => alert('Gagal mengambil data equipment.')
     });
 
-    this.http.get<any[]>(`${this.baseUrl}/api/Equipment`, { headers }).subscribe({
-      next: (data) => {
-        this.equipments = data;
+    this.geolocation.getCurrentPosition(
+      (position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        console.log('Lokasi berhasil diambil:', this.latitude, this.longitude);
       },
-      error: () => {
-        alert('Gagal mengambil data equipment.');
+      (err: GeolocationPositionError) => {
+        console.error('Gagal mengambil lokasi:', err.message);
+        this.errorMessages.latitude = 'Gagal ambil latitude';
+        this.errorMessages.longitude = 'Gagal ambil longitude';
       }
-    });
+    );
   }
 
   handleProblemCheckbox(event: Event, problemId: string): void {
@@ -115,15 +120,7 @@ export class RequestFormComponent implements OnInit {
       formData.append('file', this.selectedFile);
     }
 
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-
-    this.http.post(`${this.baseUrl}/api/Request`, formData, {
-      headers,
-      responseType: 'text'
-    }).subscribe({
+    this.requestService.create(formData).subscribe({
       next: () => {
         this.resetForm();
         this.router.navigate(['/request']);

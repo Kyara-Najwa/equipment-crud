@@ -1,13 +1,14 @@
+// src/app/pages/add-equipment/add-equipment.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { EquipmentService } from '../../services/equipment.service'; // pastikan path benar
 
 @Component({
   selector: 'app-add-equipment',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './add-equipment.component.html',
   styleUrls: ['./add-equipment.component.css']
 })
@@ -19,20 +20,13 @@ export class AddEquipmentComponent {
     location: ''
   };
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private equipmentService: EquipmentService,
+    private router: Router
+  ) {}
 
-  addEquipment() {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token || ''}`
-    });
-
-    const payload = { ...this.newEquipment };
-
-    this.http.post('http://192.168.5.200:60776/api/Equipment', payload, {
-      headers,
-      responseType: 'text'
-    }).subscribe({
+  addEquipment(): void {
+    this.equipmentService.add(this.newEquipment).subscribe({
       next: () => {
         alert('Equipment berhasil ditambahkan!');
         this.newEquipment = {

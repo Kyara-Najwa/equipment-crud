@@ -1,4 +1,4 @@
-.user-list-page {
+/* .user-list-page {
   background-color: #f0efff;
   padding: 32px;
   min-height: 100vh;
@@ -139,7 +139,7 @@ button:hover {
   color: white;
 }
 
-/* Responsive */
+/* Responsive
 @media (max-width: 768px) {
   .user-wrapper {
     padding: 16px;
@@ -157,4 +157,4 @@ button:hover {
   .action-buttons {
     gap: 4px;
   }
-}
+} */ 

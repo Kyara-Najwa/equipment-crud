@@ -1,104 +1,176 @@
+// src/app/pages/request/request.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { RequestService } from '../../services/request.service';
 
 @Component({
-  standalone: true,
   selector: 'app-request',
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './request.component.html',
-  styleUrls: ['./request.component.css'],
-  imports: [CommonModule, RouterModule, FormsModule]
+  styleUrls: ['./request.component.css']
 })
 export class RequestComponent implements OnInit {
   searchId: string = '';
   requests: any[] = [];
-  imageUrls: { [key: string]: string } = {};
-  baseUrl = 'http://192.168.5.200:60776';
 
-  constructor(private http: HttpClient) {}
+  selectedStatus: string = 'All';
+  statusOptions: string[] = ['All', 'Open', 'On Process', 'Reject', 'Close'];
+
+  statusMap: { [label: string]: string } = {
+    All: '0',
+    Open: '1',
+    'On Process': '2',
+    Reject: '4',
+    Close: '3'
+  };
+
+  statusLabelMap: { [statusCode: string]: string } = {
+    '1': 'Open',
+    '2': 'On Process',
+    '3': 'Close',
+    '4': 'Reject'
+  };
+
+  showModal: boolean = false;
+  noteInput: string = '';
+  selectedRequest: any = null;
+  rejectMode: boolean = false;
+
+  constructor(private requestService: RequestService) {}
 
   ngOnInit(): void {
     this.loadRequests();
   }
 
-  getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-  }
-
   loadRequests(): void {
-    const headers = this.getAuthHeaders();
-    this.http.get<any[]>(`${this.baseUrl}/api/Request`, { headers }).subscribe({
+    this.requestService.getAll().subscribe({
       next: data => {
-        this.requests = data;
-        this.requests.forEach(req => this.loadImageWithToken(req.capture));
+        const filterValue = this.statusMap[this.selectedStatus];
+        this.requests = filterValue === '0' ? data : data.filter(req => req.status === filterValue);
       },
-      error: () => {
+      error: err => {
+        console.error('Gagal mengambil data request:', err);
         alert('Gagal mengambil data request.');
       }
     });
   }
 
-  loadImageWithToken(capture: string): void {
-    const headers = this.getAuthHeaders();
-    this.http.get(`${this.baseUrl}/api/Request/GetFile/${capture}`, {
-      headers,
-      responseType: 'blob'
-    }).subscribe({
-      next: blob => {
-        if (blob.size === 0 || blob.type === 'application/json') {
-          this.imageUrls[capture] = 'https://i.imgur.com/LtYp3jp.jpeg';
-        } else {
-          this.imageUrls[capture] = URL.createObjectURL(blob);
-        }
-      },
-      error: () => {
-        this.imageUrls[capture] = 'https://i.imgur.com/LtYp3jp.jpeg';
-      }
-    });
+  filterByStatus(status: string): void {
+    this.selectedStatus = status;
+    this.loadRequests();
   }
 
   searchRequest(): void {
     if (!this.searchId.trim()) {
       this.loadRequests();
-    } else {
-      const headers = this.getAuthHeaders();
-      this.http.get<any>(`${this.baseUrl}/api/Request/${this.searchId}`, { headers }).subscribe({
-        next: data => {
-          this.requests = [data];
-          this.loadImageWithToken(data.capture);
-        },
-        error: () => {
-          alert('Data tidak ditemukan atau ID salah.');
-          this.requests = [];
-        }
-      });
+      return;
     }
+
+    this.requestService.getById(this.searchId).subscribe({
+      next: data => {
+        const filterValue = this.statusMap[this.selectedStatus];
+        const isValid = filterValue === '0' || data.status === filterValue;
+        this.requests = isValid ? [data] : [];
+      },
+      error: err => {
+        console.error('Gagal mencari request:', err);
+        alert('Data tidak ditemukan atau ID salah.');
+        this.requests = [];
+      }
+    });
   }
 
   deleteRequest(id: number): void {
     if (!confirm(`Yakin ingin menghapus request ID ${id}?`)) return;
 
-    const headers = this.getAuthHeaders();
-    this.http.delete(`${this.baseUrl}/api/Request/${id}`, {
-      headers,
-      responseType: 'text'
-    }).subscribe({
+    this.requestService.delete(id).subscribe({
       next: () => {
         alert('Request berhasil dihapus!');
         this.loadRequests();
       },
-      error: () => {
+      error: err => {
+        console.error('Gagal menghapus request:', err);
         alert('Gagal menghapus request.');
       }
     });
   }
 
-  onImageError(event: any): void {
-    event.target.src = 'https://i.imgur.com/LtYp3jp.jpeg';
+  getStatusClass(status: string): string {
+    switch (status) {
+      case '1': return 'status-open';
+      case '2': return 'status-process';
+      case '3': return 'status-close';
+      case '4': return 'status-reject';
+      default: return 'status-unknown';
+    }
+  }
+
+  openProcessModal(req: any): void {
+    this.selectedRequest = req;
+    this.noteInput = '';
+    this.rejectMode = false;
+    this.showModal = true;
+  }
+
+  openRejectModal(req: any): void {
+    this.selectedRequest = req;
+    this.noteInput = '';
+    this.rejectMode = true;
+    this.showModal = true;
+  }
+
+  closeModal(): void {
+    this.showModal = false;
+    this.noteInput = '';
+    this.selectedRequest = null;
+    this.rejectMode = false;
+  }
+
+  submitStatusUpdate(): void {
+    if (!this.selectedRequest) return;
+
+    const newStatus = this.rejectMode ? '4' : '2';
+
+    const payload = {
+      requestId: this.selectedRequest.id,
+      status: newStatus,
+      note: this.noteInput || (this.rejectMode ? 'Request rejected' : 'Request processed')
+    };
+
+    this.requestService.updateStatus(payload).subscribe({
+      next: () => {
+        alert(this.rejectMode ? 'Request berhasil direject!' : 'Request berhasil diproses!');
+        this.closeModal();
+        this.loadRequests();
+      },
+      error: err => {
+        console.error('Gagal memperbarui status:', err);
+        alert('Gagal memperbarui status request.');
+      }
+    });
+  }
+
+  closeRequest(req: any): void {
+    if (!req || !req.id) return;
+
+    const payload = {
+      requestId: req.id,
+      status: '3',
+      note: 'Request closed'
+    };
+
+    this.requestService.updateStatus(payload).subscribe({
+      next: () => {
+        alert('Request berhasil ditandai sebagai selesai!');
+        this.loadRequests();
+      },
+      error: err => {
+        console.error('Gagal menutup request:', err);
+        alert('Gagal memperbarui status ke Close.');
+      }
+    });
   }
 }

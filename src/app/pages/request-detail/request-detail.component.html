@@ -1,40 +1,65 @@
-<div *ngIf="request" class="detail-card">
-  <img *ngIf="imageUrl" [src]="imageUrl" alt="Foto Request" class="detail-image" />
 
-  <div class="card-text">
-    <h2 class="headline">Request ID: {{ request.id }}</h2>
-    <p class="subheadline">
-      User: {{ request.userId }} |
-      {{ request.user?.fullName }} |
-      {{ request.user?.emailAddress }}
-    </p>
-    <p class="body">Company Name: {{ request.user?.companyName }}</p>
-    <p class="body">Contact: {{ request.user?.telp }}</p>
-    <p class="body">Latitude: {{ request.latitude }}</p>
-    <p class="body">Longitude: {{ request.longtitude }}</p>
-    <p class="body">Description: {{ request.description }}</p>
-    <p class="body">Status: {{ request.status }}</p>
-    <p class="body">Date: {{ request.createdate }}</p>
-    <p class="body">Created By: {{ request.createBy }}</p>
+  <div class="detail-card">
+    <!-- Awal Permintaan -->
+    <div class="status-section">
+      <div class="status-icon">
+        <div class="circle">
+          <i data-feather="check" class="icon-check"></i>
+        </div>
+        <div *ngIf="request.status === '2'" class="vertical-line"></div>
+        <div *ngIf="request.status === '2'" class="courier-icon">
+          <img src="https://img.icons8.com/?size=100&id=GrnvnUC7vOn6&format=png&color=4E60FF" alt="kurir" />
+        </div>
+      </div>
 
-    <hr class="section-divider" />
+      <div class="status-details">
+        <h3>Awal Permintaan</h3>
+        <p>Tanggal Permintaan</p>
+        <p class="date-text">{{ request?.createdate | date: 'dd/MM/yyyy h:mm a' }}</p>
 
-    <div *ngIf="request.details?.length > 0" class="detail-services">
-      <h3 class="headline">Detail Services</h3>
-      <ul class="detail-list">
-        <li *ngFor="let detail of request.details" class="body">
-          ID Detail: {{ detail.idDetail }} | Service ID: {{ detail.serviceId }}
-        </li>
-      </ul>
-    </div>
+        <h3>Daftar Permintaan</h3>
+        <div class="box">
+          <p>No. Request : {{ request?.noRequest }}</p>
+          <p>EQ : {{ request?.equipmentId }}</p>
+          <p>{{ request?.description }}</p>
+        </div>
+                       
+        <h3>Detail Penerima</h3>
+        <div class="box">
+          <div class="receiver-details">
+            <div>
+              <p>Nama Perusahaan</p>
+              <p>Nama Penerima</p>
+              <p>No Telepon</p>
+            </div>
+            <div class="value">
+              <p>{{ request?.user?.companyName }}</p>
+              <p>{{ request?.user?.fullName }}</p>
+              <p>{{ request?.user?.telp }}</p>
+            </div>
+          </div>
+        </div>
 
-    <div class="button-group">
-      <button class="secondary" (click)="goBack()">Back</button>
-      <button class="primary">Process</button>
+        <div class="image-container" *ngIf="imageUrl">
+          <img [src]="imageUrl" alt="Foto Request" />
+        </div>
+
+        <!-- Diproses -->
+        <ng-container *ngIf="request.status === '2'">
+          <div class="process-section">
+            <h3>Diproses</h3>
+            <p class="date-text">{{ request?.updatedate | date: 'yyyy-MM-ddTHH:mm:ss.SSS' }}</p>
+
+            <h3>Detail Pengerjaan</h3>
+            <div class="box">
+              <p>{{ request?.result }}</p>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="button-group">
+          <button (click)="goBack()">Back</button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
-<div *ngIf="!request">
-  <p>Memuat data...</p>
-</div>

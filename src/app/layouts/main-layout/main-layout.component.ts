@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService, UserData } from '../../auth-service/auth-service.component';
+import { AuthService, UserData } from '../../services/auth.service';
 
 declare const feather: any;
 

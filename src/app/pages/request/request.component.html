@@ -1,29 +1,146 @@
 <div class="request-page">
   <h2 class="title">Daftar Request</h2>
 
+  <!-- Search & Create -->
   <div class="search-section">
     <input type="text" [(ngModel)]="searchId" placeholder="Cari berdasarkan ID" />
     <button (click)="searchRequest()">Cari</button>
     <button class="create-button" [routerLink]="['/request-form']">+ Create</button>
   </div>
 
+  <!-- Filter -->
+  <div class="filter-section">
+    <button *ngFor="let status of statusOptions"
+            [ngClass]="{ 'active-filter': selectedStatus === status }"
+            (click)="filterByStatus(status)">
+      {{ status }}
+    </button>
+  </div>
+
+  <!-- List -->
   <div class="request-list">
     <div class="card" *ngFor="let req of requests">
-      <div class="card-inner">
-        <div class="card-image-container">
-          <img [src]="imageUrls[req.capture]" (error)="onImageError($event)" alt="Capture Image" class="card-image" />
+
+      <!-- Status Header -->
+      <div class="card-status" [ngClass]="getStatusClass(req.status)">
+        {{ statusLabelMap[req.status] || 'Unknown' }}
+      </div>
+
+      <!-- Card Body -->
+      <div class="card-inner-row" [ngClass]="{ 'rejected-card': req.status === '4' }">
+
+        <!-- Left -->
+        <div class="card-col left">
+          <p class="card-date">{{ req.createdate | date: 'dd/MM/yyyy h:mm a' }}</p>
+          <p class="card-id">{{ req.requestNo }}</p>
         </div>
 
-        <div class="card-text">
-          <h3 class="card-title">ID: {{ req.id }}</h3>
-          <p class="card-subtitle">User ID: {{ req.userId }}</p>
-          <p class="card-description">Deskripsi: {{ req.description }}</p>
+        <!-- Middle -->
+        <div class="card-col middle">
+          <p class="card-eq">EQ : {{ req.equipment }}</p>
+          <p class="card-desc">{{ req.description }}</p>
+        </div>
 
-          <div class="button-wrapper">
-            <button class="delete-button" (click)="deleteRequest(req.id)">Hapus</button>
-            <a [routerLink]="['/request', req.id]" class="card-button">Detail</a>
+        <!-- Status Flow -->
+        <div class="card-col status">
+          <ng-container [ngSwitch]="req.status">
+
+            <!-- Waiting -->
+            <div *ngSwitchCase="'1'" class="status-flow">
+              <span class="step done"><i data-feather="check"></i></span>
+              <div class="status-labels single">
+                <span>Waiting</span>
+              </div>
+            </div>
+
+            <!-- On Process -->
+            <div *ngSwitchCase="'2'" class="status-flow">
+              <span class="step done"><i data-feather="check"></i></span>
+              <span class="line"></span>
+              <span class="step process">
+                <img src="https://img.icons8.com/?size=100&id=GrnvnUC7vOn6&format=png&color=4E60FF" alt="kurir">
+              </span>
+              <div class="status-labels">
+                <span>Waiting</span>
+                <span>On Process</span>
+              </div>
+            </div>
+
+            <!-- Close -->
+            <div *ngSwitchCase="'3'" class="status-flow">
+              <span class="step done"><i data-feather="check"></i></span>
+              <span class="line"></span>
+              <span class="step done"><i data-feather="check"></i></span>
+              <span class="line"></span>
+              <div class="status-labels">
+                <span>Waiting</span>
+                <span>On Process</span>
+              </div>
+            </div>
+
+            <!-- Rejected -->
+            <div *ngSwitchCase="'4'" class="status-flow">
+              <span class="step done"><i data-feather="check"></i></span>
+              <span class="line"></span>
+              <span class="step rejected"><i data-feather="x"></i></span>
+              <span class="line"></span>
+              <span class="step done"><i data-feather="check"></i></span>
+              <div class="status-labels">
+                <span >Waiting</span>
+                <span >Rejected</span>
+                <span >Done</span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+          <!-- Right Buttons -->
+          <div class="card-col right">
+          <!-- Status = Open -->
+              <div *ngIf="req.status === '1'" class="action-group-2x2">
+              <div class="row-btn">
+              <button class="process-button" (click)="openProcessModal(req)">Process</button>
+              <button class="reject-button" (click)="openRejectModal(req)">Reject</button>
+              </div>
+            <div class="row-btn">
+              <button class="delete-button" (click)="deleteRequest(req.id)">Delete</button>
+              <a [routerLink]="['/request', req.id]" class="detail-button">Detail</a>
+            </div>
+          </div>
+
+          <!-- Status 2: On Process -->
+          <div *ngIf="req.status === '2'" class="action-group">
+           <button class="process-button" (click)="closeRequest(req)">Close</button>
+            <a [routerLink]="['/request', req.id]" class="detail-button">Detail</a>
+          </div>
+
+          <!-- Tombol saat status == 3 (Close) -->
+          <div *ngIf="req.status === '3'" class="action-group">
+            <button class="delete-button" (click)="deleteRequest(req.id)">Delete</button>
+            <a [routerLink]="['/request', req.id]" class="detail-button">Detail</a>
+          </div>
+
+          <!-- Tombol saat status == 4 (Reject) -->
+          <div *ngIf="req.status === '4'" class="action-group">
+            <button class="delete-button" (click)="deleteRequest(req.id)">Delete</button>
+            <a [routerLink]="['/request', req.id]" class="detail-button">Detail</a>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" *ngIf="showModal">
+    <div class="modal-content">
+      <p class="modal-title">
+        {{ rejectMode ? 'Are you sure you want to reject this ticket?' : 'Are you sure you want to process this ticket?' }}
+      </p>
+      <label>Note</label>
+      <textarea [(ngModel)]="noteInput" rows="3" class="note-input"></textarea>
+      <div class="modal-actions">
+        <button class="modal-no" (click)="closeModal()">No</button>
+        <button class="modal-yes" (click)="submitStatusUpdate()">Yes</button>
       </div>
     </div>
   </div>

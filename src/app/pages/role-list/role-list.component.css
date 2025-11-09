@@ -1,0 +1,92 @@
+.role-page {
+  padding: 32px;
+  background-color: #f0efff;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.search-section {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.search-section input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.search-section button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4e60ff;
+  color: white;
+  cursor: pointer;
+}
+
+.create-button {
+  background-color: #ff4e69;
+}
+
+/* TABLE */
+.role-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.role-table th,
+.role-table td {
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.role-table th {
+  text-align: left;
+}
+
+.role-table td:last-child,
+.role-table th:last-child {
+  text-align: center;
+  width: 120px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.action-buttons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.action-buttons svg {
+  width: 16px;
+  height: 16px;
+  stroke: #4e60ff;
+  transition: transform 0.2s ease, stroke 0.2s ease;
+}
+
+.action-buttons svg:hover {
+  transform: scale(1.1);
+  stroke: #2e3ebf;
+}

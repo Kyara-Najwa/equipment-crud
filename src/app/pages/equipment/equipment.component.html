@@ -1,41 +1,63 @@
-<div class="equipment-page">
-  <div class="equipment-wrapper">
-    <h2 class="title">Data Equipment</h2>
-    <div class="table-wrapper">
-      <table>
-        <thead>
+<div class="bg-[#f0efff] min-h-screen py-8 px-8 flex justify-center items-start font-['Segoe_UI',sans-serif]">
+  <div class="w-full max-w-[1000px] bg-white p-6 md:p-7 rounded-2xl shadow-lg">
+    <h2 class="text-center text-2xl font-bold text-[#3f3d56] mb-6">Data Equipment</h2>
+    <div class="w-full overflow-x-auto">
+      <table class="w-full border-collapse text-sm bg-white rounded-xl overflow-hidden">
+        <thead class="bg-[#e4e7f5]">
           <tr>
-            <th>No</th>
-            <th>ID</th>
-            <th>Equipment</th>
-            <th>Model Name</th>
-            <th>Description</th>
-            <th>Location</th>
-            <th>Aksi</th>
+            <th class="border border-[#dee2ec] px-3 py-2 text-center text-[#3f3d56]">No</th>
+            <th class="border border-[#dee2ec] px-3 py-2 text-center text-[#3f3d56]">ID</th>
+            <th class="border border-[#dee2ec] px-3 py-2 text-center text-[#3f3d56]">Equipment</th>
+            <th class="border border-[#dee2ec] px-3 py-2 text-center text-[#3f3d56]">Model Name</th>
+            <th class="border border-[#dee2ec] px-3 py-2 text-center text-[#3f3d56]">Description</th>
+            <th class="border border-[#dee2ec] px-3 py-2 text-center text-[#3f3d56]">Location</th>
+            <th class="border border-[#dee2ec] px-3 py-2 text-center text-[#3f3d56]">Aksi</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of equipmentList; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>{{ item.id }}</td>
+            <td class="border border-[#dee2ec] px-3 py-2 text-center text-[#3f3d56]">{{ i + 1 }}</td>
+            <td class="border border-[#dee2ec] px-3 py-2 text-center text-[#3f3d56]">{{ item.id }}</td>
+
             <ng-container *ngIf="editingEquipmentId === item.id; else normalRow">
-              <td><input [(ngModel)]="editEquipment.equipment" /></td>
-              <td><input [(ngModel)]="editEquipment.modelName" /></td>
-              <td><input [(ngModel)]="editEquipment.description" /></td>
-              <td><input [(ngModel)]="editEquipment.location" /></td>
-              <td class="action-buttons">
-                <button (click)="saveEdit(item.id)">Simpan</button>
-                <button (click)="cancelEdit()">Batal</button>
+              <td class="border border-[#dee2ec] px-3 py-2">
+                <input [(ngModel)]="editEquipment.equipment"
+                       class="w-full text-center px-2 py-1 text-sm border border-gray-300 rounded-md bg-[#fdfdff]" />
+              </td>
+              <td class="border border-[#dee2ec] px-3 py-2">
+                <input [(ngModel)]="editEquipment.modelName"
+                       class="w-full text-center px-2 py-1 text-sm border border-gray-300 rounded-md bg-[#fdfdff]" />
+              </td>
+              <td class="border border-[#dee2ec] px-3 py-2">
+                <input [(ngModel)]="editEquipment.description"
+                       class="w-full text-center px-2 py-1 text-sm border border-gray-300 rounded-md bg-[#fdfdff]" />
+              </td>
+              <td class="border border-[#dee2ec] px-3 py-2">
+                <input [(ngModel)]="editEquipment.location"
+                       class="w-full text-center px-2 py-1 text-sm border border-gray-300 rounded-md bg-[#fdfdff]" />
+              </td>
+              <td class="border border-[#dee2ec] px-3 py-2">
+                <div class="flex justify-center gap-2">
+                  <button (click)="saveEdit(item.id)"
+                          class="bg-[#4e60ff] text-white px-3 py-1 text-xs font-semibold rounded hover:opacity-90">Simpan</button>
+                  <button (click)="cancelEdit()"
+                          class="bg-[#ff5b5b] text-white px-3 py-1 text-xs font-semibold rounded hover:opacity-90">Batal</button>
+                </div>
               </td>
             </ng-container>
+
             <ng-template #normalRow>
-              <td>{{ item.equipment }}</td>
-              <td>{{ item.modelName }}</td>
-              <td>{{ item.description }}</td>
-              <td>{{ item.location }}</td>
-              <td class="action-buttons">
-                <button (click)="startEdit(item)">Edit</button>
-                <button (click)="deleteEquipment(item.id)">Hapus</button>
+              <td class="border border-[#dee2ec] px-3 py-2 text-center text-[#3f3d56]">{{ item.equipment }}</td>
+              <td class="border border-[#dee2ec] px-3 py-2 text-center text-[#3f3d56]">{{ item.modelName }}</td>
+              <td class="border border-[#dee2ec] px-3 py-2 text-center text-[#3f3d56]">{{ item.description }}</td>
+              <td class="border border-[#dee2ec] px-3 py-2 text-center text-[#3f3d56]">{{ item.location }}</td>
+              <td class="border border-[#dee2ec] px-3 py-2">
+                <div class="flex justify-center gap-2">
+                  <button (click)="startEdit(item)"
+                          class="bg-[#4e60ff] text-white px-3 py-1 text-xs font-semibold rounded hover:opacity-90">Edit</button>
+                  <button (click)="deleteEquipment(item.id)"
+                          class="bg-[#ff5b5b] text-white px-3 py-1 text-xs font-semibold rounded hover:opacity-90">Hapus</button>
+                </div>
               </td>
             </ng-template>
           </tr>

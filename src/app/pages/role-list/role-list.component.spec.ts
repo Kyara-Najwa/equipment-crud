@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RequestServiceComponent } from './request-service.component';
+import { RoleListComponent } from './role-list.component';
 
-describe('RequestServiceComponent', () => {
-  let component: RequestServiceComponent;
-  let fixture: ComponentFixture<RequestServiceComponent>;
+describe('RoleListComponent', () => {
+  let component: RoleListComponent;
+  let fixture: ComponentFixture<RoleListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RequestServiceComponent]
+      imports: [RoleListComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RequestServiceComponent);
+    fixture = TestBed.createComponent(RoleListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
